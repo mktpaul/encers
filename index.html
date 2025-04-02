@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glamify - Sua Beleza Online</title>
+    <meta name="description" content="Plataforma moderna de e-commerce de beleza e cosméticos. Encontre skincare, maquiagem, perfumes e mais com entrega rápida e segura.">
+    <!-- v4.2 - Correção de Ícones e Artefatos -->
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        /* --- Reset Básico e Configurações Globais --- */
+        :root {
+            /* Paleta (verificar contraste WCAG para combinações usadas) */
+            --primary-color: #C88080;
+            --secondary-color: #88A0A8;
+            --accent-color: #B06A6A;
+            --text-color: #333333;
+            --text-light: #555555;
+            --bg-color: #FFFFFF;
+            --bg-light-gray: #F9F9F9;
+            --border-color: #EDEDED;
+            --header-top-bg: #f5f5f5;
+            --header-top-text: #666;
+            --focus-outline-color: #88A0A8; /* Cor para o outline de foco */
+
+            /* Fontes */
+            --font-main: 'Poppins', sans-serif;
+            --font-heading: 'Montserrat', sans-serif;
+
+            /* Layout & Spacing (Usando rem para escalabilidade) */
+            --container-width: 1200px;
+            --spacing-small: 0.5rem;    /* 8px */
+            --spacing-medium: 1rem;     /* 16px */
+            --spacing-large: 1.5rem;    /* 24px */
+            --spacing-xlarge: 2.5rem;   /* 40px */
+
+            /* Outros */
+            --border-radius: 4px;
+            --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+            --header-item-height: 2.5rem; /* 40px */
+        }
+
+        /* Reset básico */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: var(--font-main);
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+        a { text-decoration: none; color: var(--primary-color); transition: color 0.3s ease; }
+        a:hover { color: var(--accent-color); }
+        img { max-width: 100%; height: auto; display: block; }
+        ul { list-style: none; }
+        button { cursor: pointer; border: none; background: none; font-family: inherit; padding: 0; color: inherit; } /* Reset padding/color botão */
+        input, textarea, select {
+            font-family: inherit;
+            padding: var(--spacing-small) var(--spacing-medium);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            width: 100%;
+        }
+        /* Estilos de foco aprimorados e consistentes */
+        input:focus, textarea:focus, select:focus,
+        button:focus, a:focus {
+             outline: 2px solid transparent; /* Remove outline padrão */
+             box-shadow: none; /* Remove shadow padrão (se houver) */
+        }
+        input:focus-visible, textarea:focus-visible, select:focus-visible,
+        button:focus-visible, a:focus-visible {
+             outline: 2px solid var(--focus-outline-color);
+             outline-offset: 2px;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color); /* Manter para cliques de mouse nos inputs */
+        }
+
+
+        /* Títulos e Parágrafos */
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); color: var(--text-color); margin-bottom: var(--spacing-medium); line-height: 1.3; font-weight: 600; }
+        h1 { font-size: 2.2rem; } h2 { font-size: 1.8rem; } h3 { font-size: 1.3rem; } h4 { font-size: 1.1rem; }
+        p { margin-bottom: var(--spacing-medium); color: var(--text-light); font-size: 0.95rem; }
+
+        /* Container */
+        .container { max-width: var(--container-width); margin: 0 auto; padding-left: var(--spacing-medium); padding-right: var(--spacing-medium); }
+
+        /* Botões */
+        .btn { display: inline-block; padding: calc(var(--spacing-small) * 1.5) var(--spacing-large); background-color: var(--accent-color); color: var(--bg-color); border-radius: var(--border-radius); text-align: center; font-weight: 500; font-size: 0.9rem; transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; border: 1px solid var(--accent-color); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1; }
+        .btn:hover { background-color: var(--primary-color); border-color: var(--primary-color); color: var(--bg-color); transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .btn-secondary { background-color: transparent; color: var(--accent-color); border: 1px solid var(--accent-color); }
+        .btn-secondary:hover { background-color: var(--accent-color); color: var(--bg-color); }
+
+        /* Utilitários */
+        .section-padding { padding-top: var(--spacing-xlarge); padding-bottom: var(--spacing-xlarge); }
+        .text-center { text-align: center; }
+        .section-title { text-align: center; margin-bottom: var(--spacing-large); font-weight: 700; }
+        .mt-large { margin-top: var(--spacing-large); } /* Classe para substituir estilo inline */
+        /* Helpers display - Mobile first approach */
+        .d-none { display: none; }
+        @media (min-width: 768px) {
+            .d-md-inline-flex { display: inline-flex; }
+            .d-md-block { display: block; }
+            .d-md-none { display: none; } /* Para esconder em tablet+ */
+        }
+        @media (min-width: 992px) {
+             .d-lg-inline-flex { display: inline-flex; }
+             .d-lg-block { display: block; }
+             .d-lg-none { display: none; } /* Para esconder em desktop large+ */
+        }
+
+
+        /* --- Header v4.2 --- */
+        .header-sticky-wrapper {
+             position: sticky;
+             top: 0;
+             z-index: 1000;
+             background-color: var(--bg-color);
+             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Top Bar */
+        .header-top-bar {
+            background-color: var(--header-top-bg);
+            padding: calc(var(--spacing-small) / 1.5) 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            color: var(--header-top-text);
+        }
+        .top-bar-container {
+            display: flex;
+            justify-content: center; /* Mobile default */
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-medium);
+        }
+        .top-bar-left, .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+            flex-basis: 100%; /* Mobile default */
+            justify-content: center; /* Mobile default */
+            text-align: center; /* Mobile default */
+        }
+        .top-bar-link {
+            color: var(--header-top-text);
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .top-bar-link:hover { color: var(--primary-color); }
+        .top-bar-link i { font-size: 0.85rem; }
+
+        /* Main Header Bar */
+        .main-header { padding: var(--spacing-medium) 0; }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-medium);
+        }
+        .logo a {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            height: var(--header-item-height);
+        }
+
+        /* Busca Desktop (Escondido por padrão, mostrado em LG+) */
+        .header-search {
+            display: none; /* Mobile/Tablet default */
+            flex-grow: 1;
+            max-width: 400px;
+            position: relative;
+            margin-left: var(--spacing-large);
+            margin-right: var(--spacing-large);
+        }
+        .header-search input {
+             padding-left: 35px;
+             background-color: var(--bg-light-gray);
+             border: 1px solid var(--border-color);
+             font-size: 0.9rem;
+             height: var(--header-item-height);
+             vertical-align: middle;
+        }
+         .header-search input:focus { background-color: white; }
+         .header-search .search-input-icon {
+             position: absolute;
+             left: 12px;
+             top: 50%;
+             transform: translateY(-50%);
+             color: var(--text-light);
+             font-size: 0.9rem;
+             pointer-events: none;
+         }
+
+         /* Busca Mobile Dropdown */
+         .mobile-search-container {
+            display: none; /* Escondido por padrão */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            padding: var(--spacing-medium);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+            border-top: 1px solid var(--border-color);
+        }
+         .mobile-search-container.active { display: block; }
+         .mobile-search-container input { border: 1px solid var(--primary-color); }
+
+        /* Navegação Principal (Escondido por padrão, mostrado em LG+) */
+        .main-nav {
+            display: none; /* Mobile/Tablet default */
+        }
+        .main-nav ul { display: flex; gap: 1.75rem; height: var(--header-item-height); align-items: center; }
+        .main-nav li { height: 100%; display: flex; align-items: center; }
+        .main-nav a {
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            padding-bottom: 4px;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
+        }
+         .main-nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px; background-color: var(--primary-color); transition: width 0.3s ease; }
+         .main-nav a:hover::after,
+         .main-nav a.active::after { width: 100%; }
+
+        /* Ícones Header & Controles Mobile */
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem; /* 10px */
+            flex-shrink: 0;
+        }
+
+        /* Estilo Base Comum para Ícones da Direita (Links e Botões) */
+        .header-icons .icon-link,
+        .header-icons .icon-btn {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--header-item-height);
+            width: var(--header-item-height);
+            border-radius: 50%;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            line-height: 1;
+        }
+        .header-icons .icon-link:hover,
+        .header-icons .icon-btn:hover {
+            color: var(--primary-color);
+            background-color: rgba(0,0,0,0.04);
+         }
+
+        .cart-count {
+             position: absolute;
+             top: 2px;
+             right: 2px;
+             background-color: var(--accent-color);
+             color: white;
+             border-radius: 50%;
+             font-size: 0.6rem;
+             width: 15px;
+             height: 15px;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             font-weight: 600;
+             line-height: 1;
+        }
+
+        /* Controles Mobile */
+         .mobile-controls {
+            display: flex; /* Garante que os botões fiquem lado a lado por padrão (mobile) */
+            align-items: center;
+            gap: 0; /* Gap controlado pelo .header-icons */
+        }
+         /* Botões mobile herdam estilo de .icon-btn */
+         .search-toggle-mobile,
+         .mobile-menu-toggle {
+            font-size: 1.4rem;
+        }
+
+        /* --- Header Responsividade --- */
+        @media (min-width: 768px) {
+            /* Ajustes Top Bar para Tablet+ */
+            .top-bar-container { justify-content: space-between; flex-wrap: nowrap; }
+            .top-bar-left, .top-bar-right { flex-basis: auto; justify-content: flex-start; }
+            .top-bar-right { justify-content: flex-end; }
+        }
+
+        @media (min-width: 992px) {
+            /* Mostrar elementos Desktop em LG+ */
+            .header-search { display: block; }
+            .main-nav { display: block; }
+
+            /* Esconder o CONTAINER dos controles mobile em LG+ */
+            .mobile-controls {
+                display: none;
+            }
+
+            .mobile-search-container { display: none; } /* Garantir que busca mobile dropdown esteja escondida */
+
+             /* Mostrar ícone de desejos desktop */
+             .header-icons .icon-link[aria-label="Lista de Desejos"] { display: inline-flex; }
+        }
+        @media (max-width: 991px) {
+            /* Esconder ícone de desejos desktop em telas menores */
+             .header-icons .icon-link[aria-label="Lista de Desejos"] { display: none; }
+             /* Garantir que busca e nav desktop estejam escondidos */
+             .header-search { display: none; }
+             .main-nav { display: none; }
+             /* .mobile-controls permanece com seu display padrão (flex) */
+        }
+
+
+        /* --- Mobile Menu (Off-canvas) --- */
+         .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background-color: var(--bg-color);
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1100;
+            transition: transform 0.4s ease-in-out, visibility 0.4s ease-in-out; /* Adicionado visibility */
+            transform: translateX(-100%); /* Estado inicial: Escondido */
+            padding: var(--spacing-large);
+            overflow-y: auto;
+            visibility: hidden; /* Estado inicial: Escondido */
+         }
+         .mobile-nav.active {
+            transform: translateX(0); /* Estado ativo: Visível */
+            visibility: visible; /* Estado ativo: Visível */
+         }
+         .mobile-nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-large); }
+         .mobile-nav-header .logo a { font-size: 1.3rem; } /* Estilo para o logo dentro do menu mobile */
+         .mobile-nav-header .logo a:hover { color: var(--accent-color); } /* Hover no logo do menu */
+         .close-menu-btn { font-size: 1.6rem; color: var(--text-light); padding: 5px; /* Área de clique maior */ line-height: 1;}
+         .close-menu-btn:hover { color: var(--primary-color); }
+         .mobile-nav-search { margin: var(--spacing-medium) 0 var(--spacing-large); } /* Aumenta espaço abaixo da busca */
+         .mobile-nav-search input { width: 100%; font-size: 0.9rem; padding: var(--spacing-small) var(--spacing-medium); border: 1px solid var(--border-color); }
+         .mobile-nav ul { display: flex; flex-direction: column; gap: 0; /* Remove gap e controla com padding/border */ }
+         .mobile-nav a { font-weight: 500; font-size: 1rem; color: var(--text-color); display: block; padding: var(--spacing-medium) 0; /* Aumenta padding vertical */ border-bottom: 1px solid var(--border-color); }
+         .mobile-nav ul li:last-child a { border-bottom: none; } /* Remove borda do último item */
+         .mobile-nav a:hover { color: var(--primary-color); background-color: rgba(0,0,0,0.02); /* Fundo leve no hover */ }
+         /* Separador no menu mobile (se necessário, mas a borda nos links já faz isso) */
+         .mobile-nav .nav-separator {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: var(--spacing-small) 0;
+            list-style: none;
+            padding: 0;
+            border: none;
+         }
+         .overlay {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background-color: rgba(0, 0, 0, 0.5);
+             z-index: 1050;
+             opacity: 0;
+             visibility: hidden;
+             transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+         }
+         .overlay.active {
+             opacity: 1;
+             visibility: visible;
+         }
+
+        /* --- Hero Section --- */
+        .hero { background-color: var(--bg-light-gray); background-image: url('https://picsum.photos/seed/beautylanding2/1600/700'); background-size: cover; background-position: center center; color: var(--bg-color); padding: 5rem 0; text-align: center; position: relative; min-height: 55vh; display: flex; align-items: center; justify-content: center; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.4)); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; max-width: 650px; margin: 0 auto; }
+        .hero h1 { font-size: 2.5rem; color: var(--bg-color); margin-bottom: var(--spacing-small); text-shadow: 1px 1px 3px rgba(0,0,0,0.4); font-weight: 700; }
+        .hero p { font-size: 1rem; color: rgba(255, 255, 255, 0.95); margin-bottom: var(--spacing-large); text-shadow: 1px 1px 2px rgba(0,0,0,0.3); font-weight: 300; }
+
+        /* --- Seção de Produtos (Slider) --- */
+        .product-slider-section { position: relative; }
+        /* Ajusta o container principal do Swiper para dar espaço aos novos controles */
+        .swiper {
+            width: 100%;
+            padding-top: 10px;
+            padding-bottom: 75px; /* Aumentado para caber os controles inferiores */
+        }
+        .swiper-slide { height: auto; display: flex; justify-content: center; }
+        .product-card { background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: var(--border-radius); overflow: hidden; text-align: left; display: flex; flex-direction: column; position: relative; transition: box-shadow 0.3s ease, transform 0.3s ease; width: 100%; max-width: 300px; margin: 0 auto; height: 100%; }
+         .product-card:hover { box-shadow: var(--box-shadow); transform: translateY(-3px); }
+         .product-image { position: relative; overflow: hidden; }
+         .product-card img { width: 100%; height: 250px; object-fit: cover; transition: transform 0.4s ease; }
+         .product-card:hover img { transform: scale(1.05); }
+         .wishlist-btn { position: absolute; top: var(--spacing-small); right: var(--spacing-small); background-color: rgba(255, 255, 255, 0.8); border-radius: 50%; width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; font-size: 1rem; color: var(--text-light); transition: background-color 0.3s, color 0.3s; z-index: 2; border: none; padding: 0; }
+         .wishlist-btn:hover, .wishlist-btn.active { background-color: var(--primary-color); color: white; }
+         .wishlist-btn .fa-heart { font-weight: 400; }
+         .wishlist-btn.active .fa-heart { font-weight: 900; }
+         .product-info { padding: var(--spacing-medium); flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+         .product-brand { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 4px; display: block; font-weight: 500; }
+         .product-name { font-family: var(--font-main); font-weight: 500; font-size: 0.95rem; margin-bottom: var(--spacing-small); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.66em; }
+         .product-price { font-size: 1rem; font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-medium); }
+         .product-price .old-price { font-size: 0.85rem; color: var(--text-light); text-decoration: line-through; margin-left: var(--spacing-small); font-weight: 400; }
+         .add-to-cart-btn { width: 100%; padding: var(--spacing-small); font-size: 0.85rem; margin-top: auto; }
+
+        /* Setas Swiper (Principais laterais) */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 38px; height: 38px;
+            transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            opacity: 0.7;
+            top: 50%;
+            transform: translateY(-calc(50% + 25px)); /* Ajustado para não colidir com a paginação */
+        }
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover { background-color: var(--primary-color); color: white; opacity: 1; }
+        .swiper-button-next::after,
+        .swiper-button-prev::after { font-size: 0.9rem; font-weight: bold; }
+
+        /* --- Ajustes e Novas Setas de Paginação Swiper --- */
+
+        /* Container para as bolinhas e as novas setas */
+        .swiper-pagination-controls {
+            position: absolute;
+            bottom: 15px; /* Alinha na parte inferior */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 11; /* Garante que fique acima de outros elementos se necessário */
+            gap: 12px; /* Espaço entre setas e bolinhas */
+            width: auto; /* Largura baseada no conteúdo */
+            /* Esconder em telas menores que desktop por padrão */
+            display: none;
+        }
+
+        /* Reposiciona a paginação (bolinhas/risquinhos) para dentro do novo container */
+        .swiper-pagination-controls .swiper-pagination {
+            position: static; /* Remove o posicionamento absoluto original */
+            bottom: auto !important; /* Força sobrescrita do Swiper */
+            left: auto !important; /* Força sobrescrita do Swiper */
+            width: auto !important; /* Largura baseada no conteúdo */
+            transform: none;
+            margin: 0; /* Remove margens extras se houver */
+            display: flex; /* Garante alinhamento horizontal dos bullets */
+            align-items: center; /* Alinha verticalmente */
+            /* Mantém o estilo dos bullets abaixo */
+        }
+
+        /* Paginação Swiper (Bolinhas/Risquinhos) */
+        .swiper-pagination-bullet {
+            width: 15px;
+            height: 4px;
+            border-radius: 2px;
+            background-color: #ccc;
+            opacity: 0.7;
+            display: inline-block;
+            margin: 0 4px !important; /* !important para garantir espaçamento */
+            cursor: pointer;
+            transition: width 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+        }
+        .swiper-pagination-bullet-active {
+            width: 30px;
+            background-color: var(--primary-color);
+            opacity: 1;
+        }
+
+        /* Estilo das Novas Setas de Paginação (Pequenas, ao lado dos risquinhos) */
+        .swiper-pagination-prev,
+        .swiper-pagination-next {
+            background: none;
+            border: none;
+            color: var(--text-light); /* Cor discreta */
+            font-size: 0.85rem; /* Tamanho pequeno */
+            cursor: pointer;
+            padding: 5px 8px; /* Espaçamento interno */
+            line-height: 1;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 4px; /* Borda arredondada suave */
+        }
+        .swiper-pagination-prev:hover,
+        .swiper-pagination-next:hover {
+            color: var(--primary-color);
+            background-color: rgba(0,0,0,0.04); /* Fundo leve no hover */
+        }
+
+        /* Garante que as bolinhas originais não tenham position absolute quebrado */
+        .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+             bottom: auto; /* Sobrescreve padrão do Swiper se necessário */
+             left: auto;
+             width: auto;
+             position: relative; /* Garante que fique no fluxo do container */
+        }
+
+
+        /* Mostra o container dos controles de paginação apenas em desktop (LG+) */
+        @media (min-width: 992px) {
+            .swiper-pagination-controls {
+                display: flex; /* Mostra o container e seus filhos */
+            }
+
+            /* Opcional: Esconder as setas grandes laterais em desktop se as setas pequenas forem suficientes */
+            /*
+            .swiper-button-next,
+            .swiper-button-prev {
+                display: none;
+            }
+            */
+        }
+
+        /* --- Seção Destaques/Ofertas --- */
+        .daily-deals-section { background-color: var(--bg-light-gray); }
+        .deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-large); }
+        .deal-card { background-color: var(--bg-color); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--box-shadow); text-align: center; padding: var(--spacing-medium) var(--spacing-medium) var(--spacing-large); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; align-items: center; }
+        .deal-card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07); }
+        .deal-card img { max-width: 80%; height: 150px; object-fit: contain; margin: 0 auto var(--spacing-medium); border-radius: var(--border-radius); }
+        .deal-card h4 { font-size: 1.1rem; margin-bottom: var(--spacing-small); }
+        .deal-card p { font-size: 0.9rem; margin-bottom: var(--spacing-medium); flex-grow: 1; }
+
+        /* --- Seção Banner --- */
+        .promo-banner-section { padding: 0; margin: var(--spacing-xlarge) 0; }
+        .promo-banner-section img { width: 100%; display: block; border-radius: var(--border-radius); }
+
+        /* --- Seção Blog --- */
+        .blog-highlights { background-color: var(--bg-light-gray); }
+        .blog-post-grid { display: grid; grid-template-columns: 1fr; gap: var(--spacing-medium); }
+        .blog-post-card { background-color: var(--bg-color); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--box-shadow); display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow: 0.3s ease; }
+        .blog-post-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.07); }
+        .blog-post-image img { height: 180px; width: 100%; object-fit: cover; }
+        .blog-post-content { padding: var(--spacing-medium); }
+        .blog-post-content h4 { margin-bottom: var(--spacing-small); font-size: 1.1rem; font-family: var(--font-main); font-weight: 600; line-height: 1.4; }
+        .blog-post-content p { font-size: 0.9rem; margin-bottom: var(--spacing-medium); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .blog-post-content .read-more { font-size: 0.85rem; font-weight: 600; color: var(--primary-color); text-transform: uppercase; }
+        .blog-post-content .read-more i { margin-left: 5px; }
+        @media (min-width: 768px) { .blog-post-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .blog-post-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        /* --- Seção Marcas --- */
+        .featured-brands { border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding-top: var(--spacing-large); padding-bottom: var(--spacing-large); }
+        .brands-logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--spacing-large); }
+        .brand-logo { max-height: 45px; max-width: 110px; filter: grayscale(80%); opacity: 0.8; transition: filter 0.3s ease, opacity 0.3s ease; }
+        .brand-logo:hover { filter: grayscale(0%); opacity: 1; }
+
+        /* --- Newsletter --- */
+        .newsletter { background-color: var(--bg-light-gray); color: var(--text-color); }
+        .newsletter-content { max-width: 600px; margin: 0 auto; }
+        .newsletter h3 { color: var(--text-color); }
+        .newsletter p { color: var(--text-light); }
+        .newsletter form { display: flex; flex-direction: column; gap: var(--spacing-small); margin-top: var(--spacing-medium); }
+        .newsletter input[type="email"] { flex-grow: 1; border: 1px solid var(--border-color); padding: var(--spacing-medium); background-color: white; height: var(--header-item-height); }
+        .newsletter button { background-color: var(--accent-color); color: white; padding: 0 var(--spacing-large); border: none; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; width: auto; height: var(--header-item-height); }
+        .newsletter button:hover { background-color: var(--primary-color); }
+        @media (min-width: 768px) { .newsletter form { flex-direction: row; align-items: center; } }
+
+
+        /* --- Rodapé --- */
+        .main-footer { background-color: #222; color: rgba(255, 255, 255, 0.7); padding: var(--spacing-xlarge) 0 var(--spacing-medium); font-size: 0.85rem; line-height: 1.7; }
+        .footer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-large); margin-bottom: var(--spacing-xlarge); }
+        .footer-column h5 { color: white; margin-bottom: var(--spacing-medium); font-family: var(--font-main); font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .footer-column ul li { margin-bottom: 8px; }
+        .footer-column a { color: rgba(255, 255, 255, 0.7); transition: color 0.3s ease; }
+        .footer-column a:hover { color: white; }
+        .social-links { margin-bottom: var(--spacing-medium); }
+        .social-links a { font-size: 1.3rem; margin-right: 15px; display: inline-block; }
+        .social-links a:last-child { margin-right: 0; }
+        .payment-methods { margin-top: var(--spacing-medium); }
+        .payment-methods i, .payment-methods span { font-size: 1.9rem; margin-right: 10px; color: rgba(255, 255, 255, 0.8); vertical-align: middle; }
+        .payment-methods span { display: inline-block; background: #eee; color: #333; padding: 3px 6px; border-radius: 3px; font-size: 0.8rem; font-weight: bold; vertical-align: middle; margin-right: 10px; line-height: 1.4; }
+        .payment-title { color: white; font-size: 0.85rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
+        .footer-contact-info p { margin-bottom: 5px; font-size: 0.85rem; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: var(--spacing-large); font-size: 0.8rem; line-height: 1.5; }
+        .footer-bottom span { display: block; margin-bottom: 5px; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        /* --- Barra Inferior Mobile --- */
+        .mobile-bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 84px; /* <<< MODIFICADO: Nova altura (60 * 1.4) */
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 999;
+        }
+        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-light); font-size: 0.65rem; flex-grow: 1; padding: 5px 0; text-align: center; height: 100%; }
+        .bottom-nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+        .bottom-nav-item.active, .bottom-nav-item:active { color: var(--primary-color); }
+        /* Esconder barra inferior em tablet+ */
+        @media (min-width: 768px) {
+             .mobile-bottom-nav { display: none; }
+        }
+
+        /* --- SECTION CATEGORIES & BENEFITS - CORRECTIONS --- */
+        .categories-nav {
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .categories-nav .container {
+            padding-top: var(--spacing-medium);
+            padding-bottom: var(--spacing-medium);
+        }
+
+        .categories-list {
+            display: flex;
+            overflow-x: auto; /* Horizontal scroll for mobile */
+            gap: var(--spacing-large);
+            padding-bottom: var(--spacing-small); /* Space for scrollbar */
+            justify-content: center; /* Centraliza categorias horizontalmente */
+            -webkit-overflow-scrolling: touch; /* Scroll suave iOS */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: var(--border-color) transparent; /* Firefox */
+        }
+        /* Estilo da barra de rolagem Webkit */
+        .categories-list::-webkit-scrollbar {
+            height: 5px;
+        }
+        .categories-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .categories-list::-webkit-scrollbar-thumb {
+            background-color: var(--border-color);
+            border-radius: 10px;
+        }
+
+
+        .categories-list li {
+            flex: 0 0 auto; /* Prevent items from shrinking and auto width */
+        }
+
+        .categories-list a {
+            display: block;
+            padding: var(--spacing-small) var(--spacing-medium);
+            border-radius: var(--border-radius);
+            color: var(--text-light);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: 1px solid var(--border-color); /* Adiciona contorno leve */
+            text-align: center; /* Centraliza texto dentro dos botões */
+        }
+
+        .categories-list a:hover,
+        .categories-list a.active {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border-color: var(--primary-color); /* Mantém contorno colorido no hover/ativo */
+        }
+
+        .free-shipping-banner {
+            background-color: #E8F0FE; /* Light blue background, adjust as needed */
+            color: var(--secondary-color);
+            text-align: center;
+            padding: var(--spacing-small) 0;
+            font-size: 0.85rem;
+        }
+
+        .benefits-section {
+            background-color: var(--bg-light-gray);
+            padding-top: var(--spacing-xlarge);
+            padding-bottom: var(--spacing-xlarge);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+            gap: var(--spacing-large);
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: var(--spacing-medium);
+            border: 1px solid var(--border-color); /* Contorno nos itens de benefício */
+            border-radius: var(--border-radius); /* Opcional: borda arredondada */
+        }
+
+        .benefit-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-small);
+        }
+
+        .benefit-item h4 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-small);
+            font-weight: 600;
+        }
+
+        .benefit-item p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0; /* Remover margem inferior */
+        }
+
+        /* --- Melhoria para Mobile - Reduzindo tamanho dos boxes de benefícios E TRANSFORMANDO EM SLIDER --- */
+        @media (max-width: 767px) {
+            .categories-list {
+                 justify-content: flex-start; /* Alinha à esquerda para scroll */
+            }
+            .benefits-section {
+                padding-top: var(--spacing-large); /* Reduzindo padding superior na seção */
+                padding-bottom: var(--spacing-large); /* Reduzindo padding inferior na seção */
+            }
+            .benefits-grid {
+                /* REMOVENDO: grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+                /* REMOVENDO: gap: var(--spacing-large); */
+
+                display: flex; /* Transforma em flex container */
+                flex-direction: row; /* Itens em linha horizontal */
+                overflow-x: auto; /* Habilita scroll horizontal */
+                gap: var(--spacing-medium); /* Espaçamento entre os boxes no slider */
+                padding: 5px var(--spacing-medium) 20px; /* Adiciona padding lateral e inferior */
+                margin-left: calc(-1 * var(--spacing-medium)); /* Compensa padding do container */
+                margin-right: calc(-1 * var(--spacing-medium)); /* Compensa padding do container */
+                scroll-snap-type: x mandatory; /* Scroll "snap" para melhor UX (opcional) */
+                -webkit-overflow-scrolling: touch; /* Para scroll suave em iOS */
+                 scrollbar-width: thin; /* Firefox */
+                scrollbar-color: var(--border-color) transparent; /* Firefox */
+            }
+            /* Estilo da barra de rolagem Webkit */
+            .benefits-grid::-webkit-scrollbar {
+                height: 5px;
+            }
+            .benefits-grid::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .benefits-grid::-webkit-scrollbar-thumb {
+                background-color: var(--border-color);
+                border-radius: 10px;
+            }
+
+            .benefit-item {
+                padding: var(--spacing-medium); /* Reduzindo padding interno do box */
+                flex: 0 0 80%; /* Impede crescimento/encolhimento, define largura inicial (ajuste '80%' conforme necessário) */
+                max-width: 280px; /* Largura máxima opcional */
+                width: 80%; /* Garante que a largura base seja respeitada */
+                scroll-snap-align: start; /* "Snap" no início do item (opcional) */
+                /* margin-right: var(--spacing-medium); /* Removido - usar GAP do flexbox */
+            }
+            /* Remove a margem direita do último item para evitar espaço extra no final do slider (Não necessário com gap) */
+            /* .benefits-grid > .benefit-item:last-child {
+                margin-right: 0;
+            } */
+
+
+            .benefit-item i {
+                font-size: 2rem; /* Ícones menores */
+                margin-bottom: calc(var(--spacing-small) / 2); /* Menor espaço abaixo do ícone */
+            }
+            .benefit-item h4 {
+                font-size: 0.9rem; /* Título menor */
+                margin-bottom: calc(var(--spacing-small) / 2); /* Menor espaço abaixo do título */
+            }
+            .benefit-item p {
+                font-size: 0.75rem; /* Texto menor */
+                margin-bottom: 0; /* Removendo margem inferior do parágrafo */
+                line-height: 1.4; /* Linha de altura menor para texto */
+            }
+        }
+        /* --- FIM Melhoria para Mobile --- */
+
+
+    </style>
+</head>
+<body>
+
+    <!-- ==== CABEÇALHO v4.2 ==== -->
+    <div class="header-sticky-wrapper">
+        <!-- Top Bar -->
+        <div class="header-top-bar">
+            <div class="container top-bar-container">
+                <div class="top-bar-left">
+                    <a href="#" class="top-bar-link" id="location-selector">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Selecione sua localização</span>
+                    </a>
+                </div>
+                <div class="top-bar-right">
+                    <a href="#" class="top-bar-link">
+                         <i class="fas fa-percent"></i>
+                        <span>Seja um Afiliado</span>
+                    </a>
+                     <a href="#" class="top-bar-link">
+                         <i class="fas fa-question-circle"></i>
+                         <span>Ajuda</span>
+                     </a>
+                     <!-- Mostrado apenas em MD+ usando classe utilitária -->
+                    <a href="#" class="top-bar-link d-none d-md-inline-flex">
+                         <i class="far fa-user"></i>
+                         <span>Minha Conta</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="container header-container">
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="#">Glamify</a>
+                </div>
+
+                <!-- Busca Desktop (Mostrado em LG+ via CSS) -->
+                <div class="header-search">
+                     <i class="fas fa-search search-input-icon"></i>
+                     <input type="search" placeholder="O que você procura hoje?" aria-label="Buscar produtos">
+                </div>
+
+                <!-- Navegação Desktop (Mostrado em LG+ via CSS) -->
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#">Skincare</a></li>
+                        <li><a href="#">Maquiagem</a></li>
+                        <li><a href="#">Marcas</a></li>
+                        <li><a href="#">Promoções</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Ícones Direita -->
+                <div class="header-icons">
+                     <!-- Ícone Desejos (Link, escondido em mobile via CSS) -->
+                     <a href="#" class="icon-link" aria-label="Lista de Desejos">
+                         <i class="far fa-heart"></i>
+                     </a>
+                     <!-- Ícone Carrinho (Link) -->
+                     <a href="#" class="icon-link" aria-label="Carrinho">
+                         <i class="fas fa-shopping-bag"></i>
+                         <span class="cart-count">2</span>
+                     </a>
+
+                     <!-- Controles Mobile (CONTAINER escondido em LG+ via CSS) -->
+                     <div class="mobile-controls">
+                         <button type="button" class="icon-btn search-toggle-mobile" aria-label="Buscar" aria-controls="mobileSearchContainer" aria-expanded="false">
+                             <i class="fas fa-search"></i>
+                         </button>
+                         <!-- BOTÃO DO MENU MOBILE -->
+                         <button type="button" class="icon-btn mobile-menu-toggle" aria-label="Abrir Menu" aria-controls="mobileNav" aria-expanded="false">
+                             <i class="fas fa-bars"></i>
+                         </button>
+                         <!-- FIM BOTÃO DO MENU MOBILE -->
+                     </div>
+                 </div>
+            </div>
+        </header>
+
+         <!-- Container da Busca Mobile -->
+         <div class="mobile-search-container" id="mobileSearchContainer">
+             <div class="container">
+                 <input type="search" placeholder="Buscar produtos..." aria-label="Buscar produtos no site mobile">
+             </div>
+         </div>
+
+    </div> <!-- Fim do header-sticky-wrapper -->
+
+    <!-- ==== MENU MOBILE OFF-CANVAS (HTML CORRIGIDO/ADICIONADO) ==== -->
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true" aria-labelledby="mobileMenuTitle">
+        <div class="mobile-nav-header">
+            <!-- Título para acessibilidade -->
+            <h2 id="mobileMenuTitle" class="d-none">Menu Principal</h2>
+             <!-- Logo repetido ou outro elemento -->
+            <div class="logo">
+                <a href="#">Glamify</a>
+            </div>
+            <button type="button" class="close-menu-btn" aria-label="Fechar Menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="mobile-nav-search">
+            <input type="search" placeholder="Buscar no site..." aria-label="Buscar no site mobile">
+        </div>
+
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Skincare</a></li>
+            <li><a href="#">Maquiagem</a></li>
+            <li><a href="#">Marcas</a></li>
+            <li><a href="#">Promoções</a></li>
+            <li><a href="#">Blog</a></li>
+            <li class="nav-separator"></li> <!-- Separador visual -->
+            <li><a href="#">Minha Conta</a></li>
+            <li><a href="#">Meus Pedidos</a></li>
+            <li><a href="#">Lista de Desejos</a></li>
+            <li><a href="#">Ajuda</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <!-- ==== FIM DO MENU MOBILE OFF-CANVAS ==== -->
+
+
+    <!-- ==== CONTEÚDO PRINCIPAL ==== -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content container">
+                <h1>Sua Beleza, Nossa Inspiração</h1>
+                <p>Encontre os melhores produtos e as últimas tendências para realçar quem você é.</p>
+                <a href="#" class="btn">Descobrir Produtos</a>
+            </div>
+        </section>
+
+        <!-- ==== CATEGORIES NAVIGATION ==== -->
+        <nav class="categories-nav">
+            <div class="container">
+                <ul class="categories-list">
+                    <li><a href="#" class="active">TODOS</a></li>
+                    <li><a href="#">SKINCARE</a></li>
+                    <li><a href="#">MAQUIAGEM</a></li>
+                    <li><a href="#">CABELOS</a></li>
+                    <li><a href="#">PERFUMES</a></li>
+                    <li><a href="#">CORPO E BANHO</a></li>
+                    <li><a href="#">NOVIDADES</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- ==== FREE SHIPPING BANNER ==== -->
+        <div class="free-shipping-banner">
+            <div class="container">
+                <i class="fa-solid fa-bolt-lightning" style="margin-right: 5px;"></i> Frete Grátis acima de R$199! <a href="#" style="color: var(--secondary-color); text-decoration: underline;">Confira as regras</a> <span style="margin-left: 5px;">✨</span>
+            </div>
+        </div>
+
+        <!-- ==== BENEFITS SECTION ==== -->
+        <section class="benefits-section section-padding">
+            <div class="container">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-truck-fast"></i>
+                        <h4>Entrega Rápida</h4>
+                        <p>Receba seus produtos favoritos rapidinho no conforto da sua casa.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-medal"></i>
+                        <h4>Qualidade Garantida</h4>
+                        <p>Trabalhamos apenas com marcas selecionadas e produtos originais.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h4>Pagamento Seguro</h4>
+                        <p>Seus dados protegidos em um ambiente 100% seguro.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fa-solid fa-headphones-simple"></i>
+                        <h4>Suporte Dedicado</h4>
+                        <p>Nossa equipe está pronta para te ajudar com qualquer dúvida.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produtos Populares (Slider 1) -->
+        <section class="product-slider-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Mais Amados</h2>
+                <!-- Classe específica para este slider -->
+                <div class="swiper popular-products-slider">
+                    <div class="swiper-wrapper">
+                        <!-- Produtos -->
+                        <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodA/400/400" alt="Base Fluida Acabamento Natural Glow da Marca Chic"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Marca Chic</span> <h3 class="product-name"><a href="#">Base Fluida Acabamento Natural Glow</a></h3> <div class="product-price"> R$ 159,90 <span class="old-price">R$ 179,90</span> </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                        <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodB/400/400" alt="Máscara Capilar Ultra Hidratante Repair da Hair Power"> </a> <button type="button" class="wishlist-btn active" aria-label="Remover da Lista de Desejos"> <i class="fas fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Hair Power</span> <h3 class="product-name"><a href="#">Máscara Capilar Ultra Hidratante Repair</a></h3> <div class="product-price">R$ 89,00</div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodC/400/400" alt="Tônico Facial Revitalizante da Skin First"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Skin First</span> <h3 class="product-name"><a href="#">Tônico Facial Revitalizante com Vitamina C Pura</a></h3> <div class="product-price">R$ 110,50</div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodD/400/400" alt="Perfume Mystic Garden da Essence Fragrances"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Essence Fragrances</span> <h3 class="product-name"><a href="#">Perfume 'Mystic Garden' Eau de Toilette</a></h3> <div class="product-price">R$ 299,00</div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodE/400/400" alt="Corretivo Líquido Alta Cobertura da Make Up Pro"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Make Up Pro</span> <h3 class="product-name"><a href="#">Corretivo Líquido Alta Cobertura Matte</a></h3> <div class="product-price"> R$ 75,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodF/400/400" alt="Hidratante Corporal Karité da Body Care Lux"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Body Care Lux</span> <h3 class="product-name"><a href="#">Hidratante Corporal Karité e Baunilha</a></h3> <div class="product-price"> R$ 55,90 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodXtra1/400/400" alt="Iluminador Líquido Champagne da Glow Up"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Glow Up</span> <h3 class="product-name"><a href="#">Iluminador Líquido Champagne Radiance</a></h3> <div class="product-price"> R$ 88,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodXtra2/400/400" alt="Shampoo Seco Refrescante da Hair Pro"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Hair Pro</span> <h3 class="product-name"><a href="#">Shampoo Seco Refrescante Volume Instantâneo</a></h3> <div class="product-price"> R$ 45,50 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodXtra3/400/400" alt="Creme Noturno Anti-Idade da Skin Renew"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Skin Renew</span> <h3 class="product-name"><a href="#">Creme Noturno Anti-Idade com Retinol</a></h3> <div class="product-price"> R$ 199,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodXtra4/400/400" alt="Kit Esmaltes Coleção Nude Clássico da Nail Color"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Nail Color</span> <h3 class="product-name"><a href="#">Kit Esmaltes Coleção Nude Clássico</a></h3> <div class="product-price"> R$ 62,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                    </div>
+                    <!-- Controles específicos - MODIFICADO -->
+                    <div class="swiper-button-prev"></div> <!-- Seta principal esquerda -->
+                    <div class="swiper-button-next"></div> <!-- Seta principal direita -->
+
+                    <!-- Container para os controles de paginação (bolinhas e novas setas) -->
+                    <div class="swiper-pagination-controls">
+                         <button class="swiper-pagination-prev" aria-label="Grupo anterior de produtos">
+                             <i class="fas fa-chevron-left"></i>
+                         </button>
+                         <div class="swiper-pagination"></div> <!-- Bolinhas/Risquinhos AQUI DENTRO -->
+                         <button class="swiper-pagination-next" aria-label="Próximo grupo de produtos">
+                             <i class="fas fa-chevron-right"></i>
+                         </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Destaques/Ofertas -->
+        <section class="daily-deals-section section-padding">
+             <div class="container">
+                <h2 class="section-title">Destaques Imperdíveis</h2>
+                <div class="deals-grid">
+                    <div class="deal-card">
+                        <img src="https://picsum.photos/seed/deal1/300/200" alt="Oferta de Kit Skincare Essencial">
+                        <h4>Kit Skincare Essencial</h4>
+                        <p>Leve 3 pague 2 nos itens selecionados para uma rotina completa!</p>
+                        <a href="#" class="btn btn-secondary">Ver Oferta</a>
+                    </div>
+                    <div class="deal-card">
+                         <img src="https://picsum.photos/seed/deal2/300/200" alt="Oferta de Paletas de Maquiagem com 20% OFF">
+                         <h4>Paletas com 20% OFF</h4>
+                         <p>Cores vibrantes e pigmentadas para seu look de verão.</p>
+                         <a href="#" class="btn btn-secondary">Conferir</a>
+                    </div>
+                    <div class="deal-card">
+                         <img src="https://picsum.photos/seed/deal3/300/200" alt="Oferta de Perfumes Importados com Brinde">
+                         <h4>Perfumes Importados</h4>
+                         <p>Fragrâncias icônicas selecionadas com brinde especial na compra.</p>
+                         <a href="#" class="btn btn-secondary">Descobrir</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Banner -->
+        <section class="promo-banner-section section-padding">
+            <div class="container">
+                <a href="#">
+                    <img src="https://picsum.photos/seed/promobanner1/1200/300" alt="Banner Promocional: Nova Coleção Verão - Compre Agora!">
+                </a>
+            </div>
+        </section>
+
+        <!-- Você também pode gostar (Slider 2) -->
+        <section class="product-slider-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Você também pode gostar</h2>
+                <!-- Classe específica -->
+                <div class="swiper recommended-products-slider">
+                    <div class="swiper-wrapper">
+                         <!-- Produtos -->
+                          <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodG_rec/400/400" alt="Protetor Solar Facial Toque Seco da Sun Protect"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Sun Protect</span> <h3 class="product-name"><a href="#">Protetor Solar Facial Toque Seco FPS 60</a></h3> <div class="product-price"> R$ 92,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodH_rec/400/400" alt="Esmalte Metálico Cobre da Nail Style"> </a> <button type="button" class="wishlist-btn active" aria-label="Remover da Lista de Desejos"> <i class="fas fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Nail Style</span> <h3 class="product-name"><a href="#">Esmalte Coleção Metálicos Cor Cobre</a></h3> <div class="product-price"> R$ 19,90 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodI_rec/400/400" alt="Sérum Facial Natural da Organic Beauty"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Organic Beauty</span> <h3 class="product-name"><a href="#">Sérum Facial Natural Óleo de Rosa Mosqueta</a></h3> <div class="product-price"> R$ 135,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodJ_rec/400/400" alt="Espuma de Limpeza Facial Suave da Gentle Cleanser"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Gentle Cleanser</span> <h3 class="product-name"><a href="#">Espuma de Limpeza Facial Suave Pele Sensível</a></h3> <div class="product-price"> R$ 68,50 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodK_rec/400/400" alt="Batom Líquido Matte Vermelho Intenso da Color Pop"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Color Pop</span> <h3 class="product-name"><a href="#">Batom Líquido Matte Longa Duração Vermelho Intenso</a></h3> <div class="product-price"> R$ 49,90 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodL_rec/400/400" alt="Máscara de Cílios Volume Extremo da Eye Define"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Eye Define</span> <h3 class="product-name"><a href="#">Máscara de Cílios Volume Extremo Prova D'água</a></h3> <div class="product-price"> R$ 65,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodM_rec/400/400" alt="Água Micelar Demaquilante Bifásica da Face Care"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Face Care</span> <h3 class="product-name"><a href="#">Água Micelar Demaquilante Bifásica</a></h3> <div class="product-price"> R$ 52,50 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodN_rec/400/400" alt="Vela Aromática Figo & Flor de Laranjeira da Luxury Scents"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Luxury Scents</span> <h3 class="product-name"><a href="#">Vela Aromática Figo & Flor de Laranjeira</a></h3> <div class="product-price"> R$ 115,00 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodO_rec/400/400" alt="Óleo Reparador de Pontas Argan Oil da Hair Repair"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Hair Repair</span> <h3 class="product-name"><a href="#">Óleo Reparador de Pontas Argan Oil Complex</a></h3> <div class="product-price"> R$ 78,90 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                         <div class="swiper-slide"> <article class="product-card"> <div class="product-image"> <a href="#"> <img src="https://picsum.photos/seed/prodP_rec/400/400" alt="Pincel Kabuki para Base da Pro Tools"> </a> <button type="button" class="wishlist-btn" aria-label="Adicionar à Lista de Desejos"> <i class="far fa-heart"></i> </button> </div> <div class="product-info"> <div> <span class="product-brand">Pro Tools</span> <h3 class="product-name"><a href="#">Pincel Kabuki para Base Cobertura Perfeita</a></h3> <div class="product-price"> R$ 59,90 </div> </div> <button class="btn add-to-cart-btn">Comprar</button> </div> </article> </div>
+                    </div>
+                    <!-- Controles específicos - MODIFICADO -->
+                    <div class="swiper-button-prev"></div> <!-- Seta principal esquerda -->
+                    <div class="swiper-button-next"></div> <!-- Seta principal direita -->
+
+                    <!-- Container para os controles de paginação (bolinhas e novas setas) -->
+                    <div class="swiper-pagination-controls">
+                         <button class="swiper-pagination-prev" aria-label="Grupo anterior de produtos">
+                             <i class="fas fa-chevron-left"></i>
+                         </button>
+                         <div class="swiper-pagination"></div> <!-- Bolinhas/Risquinhos AQUI DENTRO -->
+                         <button class="swiper-pagination-next" aria-label="Próximo grupo de produtos">
+                             <i class="fas fa-chevron-right"></i>
+                         </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Destaques do Blog -->
+         <section class="blog-highlights section-padding">
+              <div class="container">
+                 <h2 class="section-title">Inspire-se no Blog</h2>
+                 <div class="blog-post-grid">
+                     <!-- Post Cards -->
+                     <article class="blog-post-card"> <a href="#" class="blog-post-image"> <img src="https://picsum.photos/seed/blogpost1/400/250" alt="Mãos aplicando creme no rosto - Guia de Skincare"> </a> <div class="blog-post-content"> <h4>Guia Completo de Skincare para Iniciantes</h4> <p>Descubra os passos essenciais e produtos recomendados para começar sua rotina de cuidados com a pele...</p> <a href="#" class="read-more">Ler Mais <i class="fas fa-arrow-right"></i></a> </div> </article>
+                     <article class="blog-post-card"> <a href="#" class="blog-post-image"> <img src="https://picsum.photos/seed/blogpost2/400/250" alt="Mulher com maquiagem iluminada para noite"> </a> <div class="blog-post-content"> <h4>Tutorial: Maquiagem Iluminada para Noite</h4> <p>Aprenda a criar um look sofisticado e radiante perfeito para eventos noturnos, com dicas de produtos...</p> <a href="#" class="read-more">Ler Mais <i class="fas fa-arrow-right"></i></a> </div> </article>
+                     <article class="blog-post-card"> <a href="#" class="blog-post-image"> <img src="https://picsum.photos/seed/blogpost3/400/250" alt="Cabelos cacheados bem cuidados"> </a> <div class="blog-post-content"> <h4>5 Mitos sobre Cuidados com Cabelos Cacheados</h4> <p>Desvendamos crenças populares e trazemos dicas reais para manter seus cachos definidos, saudáveis e...</p> <a href="#" class="read-more">Ler Mais <i class="fas fa-arrow-right"></i></a> </div> </article>
+                 </div>
+                 <div class="text-center mt-large">
+                    <a href="#" class="btn btn-secondary">Ver Todas as Dicas</a>
+                 </div>
+             </div>
+         </section>
+
+        <!-- Marcas em Destaque -->
+        <section class="featured-brands section-padding">
+             <div class="container">
+                <h2 class="section-title">Nossas Marcas Parceiras</h2>
+                <div class="brands-logos">
+                    <!-- Logos -->
+                    <img src="https://picsum.photos/seed/brandA/110/45?grayscale" alt="Logo Marca A" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandB/110/45?grayscale" alt="Logo Marca B" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandC/110/45?grayscale" alt="Logo Marca C" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandD/110/45?grayscale" alt="Logo Marca D" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandE/110/45?grayscale" alt="Logo Marca E" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandF/110/45?grayscale" alt="Logo Marca F" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandG/110/45?grayscale" alt="Logo Marca G" class="brand-logo">
+                    <img src="https://picsum.photos/seed/brandH/110/45?grayscale" alt="Logo Marca H" class="brand-logo">
+                 </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter section-padding">
+             <div class="container text-center newsletter-content">
+                <h3>Assine nossa Newsletter</h3>
+                <p>Receba ofertas exclusivas, lançamentos e dicas de beleza direto no seu e-mail.</p>
+                <form action="#">
+                    <input type="email" placeholder="Seu melhor e-mail" required aria-label="Seu melhor e-mail">
+                    <button type="submit" class="btn">Quero Receber!</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==== RODAPÉ ==== -->
+    <footer class="main-footer">
+          <div class="container">
+             <div class="footer-grid">
+                 <div class="footer-column"> <h5>Glamify</h5> <ul> <li><a href="#">Sobre Nós</a></li> <li><a href="#">Blog Glamify</a></li> <li><a href="#">Carreiras</a></li> <li><a href="#">Imprensa</a></li> <li><a href="#">Contato</a></li> </ul> </div>
+                 <div class="footer-column"> <h5>Ajuda</h5> <ul> <li><a href="#">FAQ</a></li> <li><a href="#">Como Comprar</a></li> <li><a href="#">Rastrear Pedido</a></li> <li><a href="#">Entregas</a></li> <li><a href="#">Trocas e Devoluções</a></li> <li><a href="#">Pagamento</a></li> </ul> </div>
+                 <div class="footer-column"> <h5>Políticas</h5> <ul> <li><a href="#">Privacidade</a></li> <li><a href="#">Termos de Uso</a></li> <li><a href="#">Cookies</a></li> <li><a href="#">Frete</a></li> <li><a href="#">Acessibilidade</a></li> </ul> </div>
+                 <div class="footer-column"> <h5>Conecte-se</h5> <div class="social-links"> <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a> <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a> <a href="#" aria-label="Youtube"><i class="fab fa-youtube"></i></a> <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a> <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a> </div> <div class="footer-contact-info"> <p><strong>Atendimento:</strong><br>contato@glamify.com.br<br>(XX) XXXX-XXXX</p> </div> <div class="payment-methods"> <h6 class="payment-title">Pagamento Seguro</h6> <i class="fab fa-cc-visa" aria-label="Visa"></i> <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i> <span aria-label="Pix">PIX</span> <i class="fab fa-cc-paypal" aria-label="Paypal"></i> <i class="fab fa-cc-boleto" aria-label="Boleto"></i> </div> </div>
+             </div>
+             <div class="footer-bottom">
+                <span>Glamify Beleza LTDA | CNPJ 00.000.000/0001-00</span>
+                <span>Rua Exemplo Fictício, 123 - Bairro Imaginário - Cidade/UF - CEP 00000-000</span>
+                <span>© 2024 Glamify. Todos os direitos reservados.</span>
+             </div>
+         </div>
+    </footer>
+
+    <!-- ==== BARRA DE NAVEGAÇÃO INFERIOR (MOBILE) ==== -->
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="bottom-nav-item active" aria-label="Home"> <i class="fas fa-home"></i> <span>Home</span> </a>
+        <a href="#" class="bottom-nav-item" aria-label="Categorias"> <i class="fas fa-th-large"></i> <span>Categorias</span> </a>
+        <a href="#" class="bottom-nav-item" aria-label="Sacola"> <i class="fas fa-shopping-bag"></i> <span>Sacola</span> </a>
+        <a href="#" class="bottom-nav-item" aria-label="Lista de Desejos"> <i class="far fa-heart"></i> <span>Desejos</span> </a>
+        <a href="#" class="bottom-nav-item" aria-label="Minha Conta"> <i class="far fa-user"></i> <span>Conta</span> </a>
+    </nav>
+
+    <!-- ==== SCRIPTS ==== -->
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Scripts Customizados -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // --- Configuração do Menu Mobile ---
+            function setupMobileMenu() {
+                const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+                const mobileNav = document.getElementById('mobileNav');
+                // Seleciona o botão de fechar DENTRO do mobileNav
+                const closeMenuBtn = mobileNav ? mobileNav.querySelector('.close-menu-btn') : null;
+                const overlay = document.getElementById('overlay');
+
+                // Verifica se todos os elementos essenciais existem
+                if (!mobileMenuToggle || !mobileNav || !closeMenuBtn || !overlay) {
+                    console.error("Elementos essenciais do menu mobile não encontrados. Verifique o HTML (mobileNav, close-menu-btn, overlay).");
+                    return; // Impede a execução se algo estiver faltando
+                }
+
+                function openMenu() {
+                    mobileNav.classList.add('active');
+                    mobileNav.setAttribute('aria-hidden', 'false');
+                    overlay.classList.add('active');
+                    overlay.setAttribute('aria-hidden', 'false');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'true');
+                    document.body.style.overflow = 'hidden'; // Trava scroll do body
+                    // Foca no botão de fechar para acessibilidade
+                    setTimeout(() => closeMenuBtn.focus(), 300); // Delay para transição
+                }
+
+                function closeMenu() {
+                    mobileNav.classList.remove('active');
+                    mobileNav.setAttribute('aria-hidden', 'true');
+                    overlay.classList.remove('active');
+                    overlay.setAttribute('aria-hidden', 'true');
+                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = ''; // Libera scroll do body
+                    // Devolve o foco para o botão que abriu o menu
+                    mobileMenuToggle.focus();
+                }
+
+                // Event listeners
+                mobileMenuToggle.addEventListener('click', openMenu);
+                closeMenuBtn.addEventListener('click', closeMenu);
+                overlay.addEventListener('click', closeMenu);
+
+                // Fechar o menu ao clicar em um link (opcional, bom para SPAs ou links #)
+                const mobileNavLinks = mobileNav.querySelectorAll('a');
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        // Se for um link interno (#) ou deve fechar sempre:
+                         if (link.getAttribute('href')?.startsWith('#') || true) { // Adapte a condição se necessário
+                             closeMenu();
+                         }
+                        // Se for um link externo, não precisa fechar, a página vai recarregar
+                    });
+                });
+
+                // Fechar com a tecla Escape
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+                        closeMenu();
+                    }
+                });
+            }
+
+            // --- Configuração dos Botões Wishlist ---
+            function setupWishlistButtons() {
+                const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+                wishlistButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        button.classList.toggle('active');
+
+                        const heartIcon = button.querySelector('i.fa-heart');
+                        if (!heartIcon) return;
+
+                        const isAdding = button.classList.contains('active');
+                        if (isAdding) {
+                            heartIcon.classList.remove('far'); // Ícone vazio
+                            heartIcon.classList.add('fas'); // Ícone preenchido
+                            button.setAttribute('aria-label', 'Remover da Lista de Desejos');
+                            // console.log("Produto adicionado aos desejos (simulação)");
+                        } else {
+                            heartIcon.classList.remove('fas'); // Ícone preenchido
+                            heartIcon.classList.add('far'); // Ícone vazio
+                            button.setAttribute('aria-label', 'Adicionar à Lista de Desejos');
+                             // console.log("Produto removido dos desejos (simulação)");
+                        }
+                        // Aqui você adicionaria a lógica real de adicionar/remover da wishlist (AJAX, etc.)
+                    });
+                });
+            }
+
+             // --- Configuração do Toggle da Busca Mobile ---
+             function setupMobileSearch() {
+                 const searchToggleMobile = document.querySelector('.search-toggle-mobile');
+                 const mobileSearchContainer = document.getElementById('mobileSearchContainer');
+
+                 if (!searchToggleMobile || !mobileSearchContainer) {
+                     console.error("Elementos da busca mobile não encontrados.");
+                     return;
+                 }
+
+                 const searchInput = mobileSearchContainer.querySelector('input[type="search"]');
+
+                 function openSearch() {
+                     mobileSearchContainer.classList.add('active');
+                     searchToggleMobile.setAttribute('aria-expanded', 'true');
+                     if (searchInput) {
+                        setTimeout(() => searchInput.focus(), 50);
+                     }
+                 }
+
+                 function closeSearch() {
+                     mobileSearchContainer.classList.remove('active');
+                     searchToggleMobile.setAttribute('aria-expanded', 'false');
+                 }
+
+                 searchToggleMobile.addEventListener('click', (e) => {
+                     e.stopPropagation(); // Impede que o clique feche imediatamente o menu
+                     if (mobileSearchContainer.classList.contains('active')) {
+                        closeSearch();
+                     } else {
+                        openSearch();
+                     }
+                 });
+
+                 // Fechar ao clicar fora
+                 document.addEventListener('click', (event) => {
+                     if (mobileSearchContainer.classList.contains('active')) {
+                          const isClickInsideSearchContainer = mobileSearchContainer.contains(event.target);
+                          const isClickOnToggleButton = searchToggleMobile.contains(event.target);
+                          if (!isClickInsideSearchContainer && !isClickOnToggleButton) {
+                              closeSearch();
+                          }
+                      }
+                 });
+
+                  // Impede que cliques DENTRO do container fechem ele
+                  mobileSearchContainer.addEventListener('click', (e) => e.stopPropagation());
+
+                  // Fechar com ESC
+                  document.addEventListener('keydown', (e) => {
+                     if (e.key === 'Escape' && mobileSearchContainer.classList.contains('active')) {
+                         closeSearch();
+                         searchToggleMobile.focus(); // Devolve o foco para o botão
+                     }
+                 });
+             }
+
+            // --- Inicialização dos Sliders Swiper ---
+            function initializeSwiper(selector, config = {}) {
+                const swiperElement = document.querySelector(selector);
+                if (!swiperElement) {
+                    // console.warn(`Elemento Swiper '${selector}' não encontrado.`);
+                    return null;
+                }
+
+                // Seletores padrão DENTRO do container principal do Swiper
+                const paginationSelector = `${selector} .swiper-pagination`;
+                const nextButtonSelector = `${selector} .swiper-button-next`;
+                const prevButtonSelector = `${selector} .swiper-button-prev`;
+
+                // Seletores para as NOVAS setas de paginação (pequenas)
+                const paginationNextSmallSelector = `${selector} .swiper-pagination-next`;
+                const paginationPrevSmallSelector = `${selector} .swiper-pagination-prev`;
+
+
+                const baseConfig = {
+                    loop: false, // Manter false para slidesPerGroup funcionar melhor no início/fim
+                    slidesPerView: 1.3,
+                    spaceBetween: 15,
+                    slidesPerGroup: 1, // Avança 1 por padrão no mobile
+                    speed: 600, // Duração da transição (mais suave)
+                    pagination: {
+                        el: paginationSelector, // Usar seletor dinâmico
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: nextButtonSelector, // Usar seletor dinâmico para setas grandes
+                        prevEl: prevButtonSelector, // Usar seletor dinâmico para setas grandes
+                    },
+                    breakpoints: {
+                        // Define quantos slides avançam juntos, idealmente igual ao slidesPerView
+                        576: { slidesPerView: 2.3, spaceBetween: 20, slidesPerGroup: 2 },
+                        768: { slidesPerView: 3, spaceBetween: 25, slidesPerGroup: 3 },
+                        992: { slidesPerView: 4, spaceBetween: 30, slidesPerGroup: 4 },
+                        1200: { slidesPerView: 5, spaceBetween: 30, slidesPerGroup: 5 }
+                    },
+                    a11y: { // Acessibilidade
+                        enabled: true,
+                        prevSlideMessage: 'Slide anterior',
+                        nextSlideMessage: 'Próximo slide',
+                        paginationBulletMessage: 'Ir para o slide {{index}}',
+                    },
+                    // Adicione outras opções padrão do Swiper aqui se necessário
+                };
+
+                const finalConfig = { ...baseConfig, ...config }; // Mescla config base com customizada
+
+                try {
+                    if (typeof Swiper === 'undefined') {
+                        console.error('Swiper não está definido. Verifique o carregamento do script.');
+                        return null;
+                    }
+
+                    const swiperInstance = new Swiper(selector, finalConfig); // Cria a instância
+
+                    // --- Adicionar listeners para as NOVAS setas de paginação (pequenas) ---
+                    // Busca os botões PEQUENOS DENTRO do elemento Swiper atual
+                    const paginationNextBtnSmall = swiperElement.querySelector('.swiper-pagination-next');
+                    const paginationPrevBtnSmall = swiperElement.querySelector('.swiper-pagination-prev');
+
+                    // Verifica se os botões existem e a instância foi criada
+                    if (paginationNextBtnSmall && paginationPrevBtnSmall && swiperInstance) {
+                        paginationNextBtnSmall.addEventListener('click', () => {
+                            swiperInstance.slideNext(); // Usa a API do Swiper para avançar
+                        });
+                        paginationPrevBtnSmall.addEventListener('click', () => {
+                            swiperInstance.slidePrev(); // Usa a API do Swiper para voltar
+                        });
+                        // console.log(`Listeners adicionados para setas de paginação PEQUENAS em '${selector}'`); // Para debug
+                    } else {
+                         // Não é um erro grave se não existirem, apenas um aviso
+                        // console.warn(`Botões de paginação PEQUENOS não encontrados ou Swiper não instanciado para '${selector}'`);
+                    }
+                    // --- Fim dos listeners das setas pequenas ---
+
+
+                    return swiperInstance; // Retorna a instância criada
+                } catch (e) {
+                    console.error(`Erro ao inicializar Swiper ou adicionar listeners '${selector}': `, e);
+                    return null;
+                }
+            }
+
+            // --- Função que inicializa TODOS os Swipers ---
+            function initializeAllSwipers() {
+                 initializeSwiper('.popular-products-slider'); // Inicializa o primeiro slider
+                 initializeSwiper('.recommended-products-slider'); // Inicializa o segundo slider
+            }
+
+            // --- Executar as Funções de Setup ---
+            try {
+                setupMobileMenu();      // CORREÇÃO: Agora deve funcionar
+                setupWishlistButtons();
+                setupMobileSearch();
+                initializeAllSwipers();
+                // console.log("Scripts customizados carregados e inicializados."); // Descomente para debug
+            } catch (error) {
+                console.error("Erro durante a execução dos scripts de setup:", error);
+            }
+
+        }); // Fim do DOMContentLoaded
+    </script>
+
+</body>
+</html>
